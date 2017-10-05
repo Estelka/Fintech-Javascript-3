@@ -4,8 +4,9 @@
  */
 function timer(logger = console.log) {
   for (var i = 0; i < 10; i++) {
+    let newI = i;
     setTimeout(() => {
-      logger(i);
+      logger(newI);
     }, 100);
   }
 }
@@ -45,7 +46,10 @@ function sum(x) {
  * @return {boolean}
  */
 function anagram(first, second) {
-  return false;
+  //const arrFirst = first.toLowerCase().split('');
+  //const arrSecond = second.toLowerCase().split('');
+  if (first.toLowerCase().split('').length !== second.toLowerCase().split('').length) { return false; }// можно без этой строчки
+  return first.toLowerCase().split('').sort().join('') === second.toLowerCase().split('').sort().join('');
 }
 
 /*= ============================================ */
@@ -57,7 +61,13 @@ function anagram(first, second) {
  * @return {Array<number>} массив уникальных значений, отсортированный по возрастанию
  */
 function getUnique(arr) {
-  return [];
+  let i = arr.length;
+  while (i--){
+    if (arr.sort()[i]===arr.sort()[i-1]) {
+      arr.splice(i, 1);
+    }
+  }
+  return arr;
 }
 
 /**
@@ -67,7 +77,7 @@ function getUnique(arr) {
  * @return {Array<number>} массив уникальных значений, отсортированный по возрастанию
  */
 function getIntersection(first, second) {
-  return [];
+  return first.filter(a => second.includes(a)).sort((a,b)=>a - b);
 }
 
 /* ============================================= */
@@ -86,13 +96,16 @@ function getIntersection(first, second) {
  * @return {boolean}
  */
 function isIsomorphic(left, right) {
-
+  if (left.split('').length === right.split('').length) {
+    return left.toLowerCase().split('').filter((arrLeft,j)=>arrLeft != right.toLowerCase().split('')[j]).length <= 1;
+  }
+  return false;
 }
 
 module.exports = {
   timer,
   customBind,
-  sum,
+  sum, 
   anagram,
   getUnique,
   getIntersection,
